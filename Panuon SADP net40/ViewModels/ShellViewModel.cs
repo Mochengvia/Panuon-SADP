@@ -293,7 +293,7 @@ namespace Panuon_SADP_net40.ViewModels
             SetButtonsEnable(false, false, true, true, true);
             IsSortCategoriesEnabled = false;
             (GetView() as PUWindow).ResizeMode = ResizeMode.CanMinimize;
-        }
+        } 
 
         public void Pause()
         {
