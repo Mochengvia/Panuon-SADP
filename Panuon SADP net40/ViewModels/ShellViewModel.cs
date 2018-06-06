@@ -295,6 +295,39 @@ namespace Panuon_SADP_net40.ViewModels
             (GetView() as PUWindow).ResizeMode = ResizeMode.CanMinimize;
         } 
 
+        public void SingleStep()
+        {
+            if (_thread != null && _thread.IsAlive)
+            {
+                if (_currentMode == ModeCategory.SingleStep || _currentMode == ModeCategory.Paused)
+                {
+                    _thread.Resume();
+                }
+                else
+                {
+                    _currentMode = ModeCategory.SingleStep;
+                    SetButtonsEnable(false, true, true, false, true);
+                    IsSortCategoriesEnabled = false;
+                    ConsoleContent = "已进入单步模式。";
+                }
+                return;
+            }
+            //没有数据
+            if (_currentData == null)
+                Generate();
+
+            _currentMode = ModeCategory.SingleStep;
+            var stepList = SortStepGenerator.Sort(_sortCategory, _currentData);
+            _thread = new Thread(() =>
+            {
+                ExecuteSteps();
+            });
+            _thread.Start();
+            SetButtonsEnable(false, true, true, false, true);
+            IsSortCategoriesEnabled = false;
+            (GetView() as PUWindow).ResizeMode = ResizeMode.CanMinimize;
+        }
+
         public void Pause()
         {
             if (_thread == null || !_thread.IsAlive)
@@ -330,7 +363,7 @@ namespace Panuon_SADP_net40.ViewModels
 
         public void GitHub()
         {
-
+            System.Diagnostics.Process.Start("explorer.exe", "https://github.com/Ruris/Panuon-SADP");
         }
         #endregion
 
