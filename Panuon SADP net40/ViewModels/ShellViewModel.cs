@@ -47,10 +47,10 @@ namespace Panuon_SADP_net40.ViewModels
         /// <summary>
         /// 数据 输入框水印
         /// </summary>
-        public string WaterMark
+        public string Watermark
         {
             get { return _waterMark; }
-            set { _waterMark = value; NotifyOfPropertyChange(() => WaterMark); }
+            set { _waterMark = value; NotifyOfPropertyChange(() => Watermark); }
         }
         private string _waterMark = "仅支持整数，相邻数字使用逗号（中英文都可）隔开。\n\n非法的单个数据将被丢弃。";
 
@@ -272,11 +272,12 @@ namespace Panuon_SADP_net40.ViewModels
         public void Run()
         {
             //在排序任务中 - 继续执行
-            if (_thread != null && _thread.IsAlive)
+            if (_thread != null && _thread.IsAlive && _thread.ThreadState == ThreadState.Suspended)
             {
                 _thread.Resume();
                 _currentMode = ModeCategory.Running;
                 ConsoleContent = "开始继续执行。";
+                SetButtonsEnable(false, false, true, true, true);
                 return;
             }
             //没有数据

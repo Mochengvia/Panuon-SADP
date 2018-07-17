@@ -115,7 +115,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Panuon.UI\Panuon.UI.csproj">
+    <ProjectReference Include="C:\Users\97042\Documents\Visual Studio 2015\Projects\Panuon SecurityBox\Panuon.UI\Panuon.UI.csproj">
       <Project>{72b3698e-1784-4101-99ae-fc7b8f48e96d}</Project>
       <Name>Panuon.UI</Name>
     </ProjectReference>
