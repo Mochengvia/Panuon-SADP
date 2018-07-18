@@ -75,7 +75,7 @@ namespace Panuon_SADP_net40.ViewModels
         private string _inputQuantityString = "15";
 
         /// <summary>
-        /// 随机数输入框内容
+        /// 控制台内容
         /// </summary>
         public string ConsoleContent
         {
