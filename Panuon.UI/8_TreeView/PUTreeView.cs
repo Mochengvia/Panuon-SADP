@@ -34,12 +34,11 @@ namespace Panuon.UI
         /// <summary>
         /// 请使用本属性获取被选中的元素，而不是SelectedItem。
         /// </summary>
-        [Bindable(true)]
+        [Bindable(true, BindingDirection.TwoWay)]
         public PUTreeViewItem ChoosedItem
         {
             get { return (PUTreeViewItem)GetValue(ChoosedItemProperty); }
-            set
-            { SetValue(ChoosedItemProperty, value); }
+            set { SetValue(ChoosedItemProperty, value); }
         }
         public static readonly DependencyProperty ChoosedItemProperty = DependencyProperty.Register("ChoosedItem", typeof(PUTreeViewItem), typeof(PUTreeViewItem), new PropertyMetadata(null));
 
@@ -52,9 +51,6 @@ namespace Panuon.UI
             set { SetValue(IsExpandDoubleClickProperty, value); }
         }
         public static readonly DependencyProperty IsExpandDoubleClickProperty = DependencyProperty.Register("IsExpandDoubleClick", typeof(bool), typeof(PUTreeViewItem), new PropertyMetadata(false));
-
-       
-
         #endregion
 
         #region APIs

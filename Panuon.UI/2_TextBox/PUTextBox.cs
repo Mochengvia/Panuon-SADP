@@ -50,7 +50,7 @@ namespace Panuon.UI
 
         #region Property
         /// <summary>
-        /// 输入框样式，默认值为General。
+        /// 按钮样式，默认值为General。
         /// </summary>
         public TextBoxStyles TextBoxStyle
         {
@@ -77,17 +77,17 @@ namespace Panuon.UI
             get { return (Color)GetValue(CoverBrushProperty); }
             set { SetValue(CoverBrushProperty, value); }
         }
-        public static readonly DependencyProperty CoverBrushProperty = DependencyProperty.Register("CoverBrush", typeof(Color), typeof(PUTextBox), new PropertyMetadata((Color)ColorConverter.ConvertFromString("#888888")));
+        public static readonly DependencyProperty CoverBrushProperty = DependencyProperty.Register("ShadowColor", typeof(Color), typeof(PUTextBox), new PropertyMetadata((Color)ColorConverter.ConvertFromString("#888888")));
 
         /// <summary>
         ///  水印内容，默认值为空。
         /// </summary>
-        public string WaterMark
+        public string Watermark
         {
-            get { return (string)GetValue(WaterMarkProperty); }
-            set { SetValue(WaterMarkProperty, value); }
+            get { return (string)GetValue(WatermarkProperty); }
+            set { SetValue(WatermarkProperty, value); }
         }
-        public static readonly DependencyProperty WaterMarkProperty = DependencyProperty.Register("WaterMark", typeof(string), typeof(PUTextBox), new PropertyMetadata(""));
+        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(PUTextBox), new PropertyMetadata(""));
 
         /// <summary>
         /// 放置在输入框前的图标。

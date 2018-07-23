@@ -53,6 +53,8 @@ namespace Panuon.UI
         }
         public static readonly DependencyProperty ShowDelayProperty = DependencyProperty.Register("ShowDelay", typeof(bool), typeof(PUWindow), new PropertyMetadata(false));
 
+
+
         /// <summary>
         /// 隐藏所有的控制栏右侧按钮。
         /// </summary>
@@ -63,8 +65,9 @@ namespace Panuon.UI
         }
         public static readonly DependencyProperty HideNavButtonsProperty = DependencyProperty.Register("HideNavButtons", typeof(bool), typeof(PUWindow), new PropertyMetadata(false));
 
+
         /// <summary>
-        /// 窗体启动时使用动画，默认值为true。
+        /// 窗体打开时使用动画，默认值为true。
         /// </summary>
         public bool AnimateIn
         {
@@ -72,7 +75,6 @@ namespace Panuon.UI
             set { SetValue(AnimateInProperty, value); }
         }
         public static readonly DependencyProperty AnimateInProperty = DependencyProperty.Register("AnimateIn", typeof(bool), typeof(PUWindow), new PropertyMetadata(true));
-
 
         /// <summary>
         /// 窗体关闭时使用动画，默认值为true。
@@ -249,7 +251,6 @@ namespace Panuon.UI
 
         public void Execute(object parameter)
         {
-
             var window = (parameter as PUWindow);
             if (!window.AnimateOut)
                 window.Close();

@@ -5,7 +5,7 @@
 
     <SolidColorBrush x:Key="Theme" Color="#FF3E3E3E"/>
     <FontFamily x:Key="FontAwesome" >/#fontawesome</FontFamily>
-    <local:CornerRadiusConverter x:Key="CornerRadiusConverter"></local:CornerRadiusConverter>
+    <local:ToggleCornerRadiusConverter x:Key="ToggleCornerRadiusConverter"></local:ToggleCornerRadiusConverter>
     <local:ToggleHeightConverter x:Key="ToggleHeightConverter"></local:ToggleHeightConverter>
     <local:TranslateXConverter x:Key="TranslateXConverter"></local:TranslateXConverter>
     <local:ScaleConverter x:Key="ScaleConverter"></local:ScaleConverter>
@@ -13,6 +13,7 @@
     <local:TextBoxInnerHeightConverter x:Key="TextBoxInnerHeightConverter"></local:TextBoxInnerHeightConverter>
     <local:HeaderConverter x:Key="HeaderConverter"></local:HeaderConverter>
     <local:IconFontSizeConverter x:Key="IconFontSizeConverter"></local:IconFontSizeConverter>
+    <local:SideCornerRadiusConverter x:Key="SideCornerRadiusConverter"></local:SideCornerRadiusConverter>
 
     <Style TargetType="{x:Type local:PUWindow}">
         <Setter Property="Background" Value="White"></Setter>
@@ -24,15 +25,6 @@
         <Setter Property="AllowsTransparency" Value="True"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Style.Resources>
-            <LinearGradientBrush x:Key="GradualNotIn" StartPoint="0,0" EndPoint="0,1">
-                <GradientStopCollection>
-                    <GradientStop x:Name="offset1" Offset="0" Color="White"></GradientStop>
-                    <GradientStop x:Name="offset2" Offset="1" Color="White"></GradientStop>
-                </GradientStopCollection>
-            </LinearGradientBrush>
-            <ScaleTransform x:Key="ScaleNotIn" ScaleX="1" ScaleY="1"/>
-        </Style.Resources>
         <Style.Triggers>
             <Trigger Property="AnimationStyle" Value="Fade">
                 <Setter Property="Opacity" Value="0"></Setter>
@@ -46,7 +38,7 @@
                                             <RowDefinition Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Grid x:Name="grdNavbar" Margin="0,0,0.5,0" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
+                                        <Grid x:Name="grdNavbar" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}">
                                                 <Label Content="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Margin="3,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}"></Label>
                                                 <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}">
@@ -66,35 +58,19 @@
                                         </Grid>
                                         <Grid Grid.Row="1" x:Name="grdContainer">
                                             <AdornerDecorator>
-                                                <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" />
+                                                <ContentPresenter Content="{TemplateBinding Content}" />
                                             </AdornerDecorator>
                                         </Grid>
                                     </Grid>
-                                    <Border x:Name="bdrCover" Margin="-1" Background="Black" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
+                                    <Border x:Name="bdrCover" Background="Gray" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="AnimateIn" Value="False">
-                                    <Setter Property="Opacity" Value="1"></Setter>
-                                </Trigger>
-                                <Trigger Property="ShowDelay" Value="True">
-                                    <Trigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </Trigger.EnterActions>
-                                </Trigger>
                                 <EventTrigger RoutedEvent="Loaded">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4"/>
-                                            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
-                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4">
+                                            </DoubleAnimation>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
@@ -164,7 +140,7 @@
                                             <RowDefinition Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Grid x:Name="grdNavbar" Margin="0,0,0.5,0" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
+                                        <Grid x:Name="grdNavbar" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}">
                                                 <Label Content="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Margin="3,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}"></Label>
                                                 <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}">
@@ -184,44 +160,27 @@
                                         </Grid>
                                         <Grid Grid.Row="1" x:Name="grdContainer">
                                             <AdornerDecorator>
-                                                <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" />
+                                                <ContentPresenter Content="{TemplateBinding Content}" />
                                             </AdornerDecorator>
                                         </Grid>
                                     </Grid>
-                                    <Border x:Name="bdrCover" Margin="-1" Background="Black" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
+                                    <Border x:Name="bdrCover" Background="Gray" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="ShowDelay" Value="True">
-                                    <Trigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </Trigger.EnterActions>
-                                </Trigger>
-                                <Trigger Property="AnimateIn" Value="False">
-                                    <Setter TargetName="bdrOuter" Property="OpacityMask" Value="{StaticResource GradualNotIn}"></Setter>
-                                </Trigger>
                                 <EventTrigger RoutedEvent="Loaded">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="OpacityMask.GradientStops[1].Offset" To="1" Duration="0:0:0.2"></DoubleAnimation>
-                                            <ColorAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="OpacityMask.GradientStops[1].Color" To="White" Duration="0:0:0.1" BeginTime="0:0:0.2"></ColorAnimation>
-                                            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
-                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="offset2" Storyboard.TargetProperty="Offset" To="1" Duration="0:0:0.2"></DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="offset2" Storyboard.TargetProperty="Color" To="White" Duration="0:0:0.1" BeginTime="0:0:0.2"></ColorAnimation>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                                 <EventTrigger SourceName="btnClose" RoutedEvent="Button.Click">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="OpacityMask.GradientStops[0].Color" To="Transparent" Duration="0:0:0.2"></ColorAnimation>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="OpacityMask.GradientStops[0].Offset" To="1" Duration="0:0:0.1" BeginTime="0:0:0.2"></DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="offset1" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2"></ColorAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="offset1" Storyboard.TargetProperty="Offset" To="1" Duration="0:0:0.1" BeginTime="0:0:0.2"></DoubleAnimation>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
@@ -279,7 +238,7 @@
                                             <RowDefinition Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Grid x:Name="grdNavbar" Margin="0,0,0.5,0" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
+                                        <Grid x:Name="grdNavbar" Background="{Binding NavbarBackground,RelativeSource={RelativeSource AncestorType=Window}}">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="{Binding NavbarHeight,RelativeSource={RelativeSource AncestorType=Window}}">
                                                 <Label Content="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Margin="3,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}"></Label>
                                                 <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="{TemplateBinding FontSize}" FontFamily="{StaticResource FontAwesome}" Foreground="{TemplateBinding Foreground}">
@@ -299,46 +258,28 @@
                                         </Grid>
                                         <Grid Grid.Row="1" x:Name="grdContainer">
                                             <AdornerDecorator>
-                                                <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" />
+                                                <ContentPresenter Content="{TemplateBinding Content}" />
                                             </AdornerDecorator>
                                         </Grid>
                                     </Grid>
-                                    <Border x:Name="bdrCover" Margin="-1" Background="Black" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
+                                    <Border x:Name="bdrCover" Background="Gray" BorderThickness="0" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=Window}}" Opacity="0" IsHitTestVisible="False"/>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="ShowDelay" Value="True">
-                                    <Trigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Hidden}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </Trigger.EnterActions>
-                                </Trigger>
-                                <Trigger Property="AnimateIn" Value="False">
-                                    <Setter Property="Opacity" Value="1"></Setter>
-                                    <Setter TargetName="bdrOuter" Property="RenderTransform" Value="{StaticResource ScaleNotIn}"></Setter>
-                                </Trigger>
                                 <EventTrigger RoutedEvent="Loaded">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.3"/>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.3"/>
                                             <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.4"/>
-                                            <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.2" Storyboard.TargetName="content" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
-                                            </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
                                 <EventTrigger SourceName="btnClose" RoutedEvent="Button.Click">
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.95" Duration="0:0:0.3"/>
-                                            <DoubleAnimation Storyboard.TargetName="bdrOuter" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0.95" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleX" To="0.95" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="scale" Storyboard.TargetProperty="ScaleY" To="0.95" Duration="0:0:0.3"/>
                                             <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3"/>
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -588,7 +529,7 @@
                                                 </MultiBinding>
                                             </ScrollViewer.Height>
                                         </ScrollViewer>
-                                        <TextBlock  x:Name="tbWaterMark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding WaterMark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
+                                        <TextBlock  x:Name="tbWatermark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding Watermark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -610,7 +551,7 @@
                                     </Trigger.ExitActions>
                                 </Trigger>
                                 <Trigger Property="Text" Value="">
-                                    <Setter Property="Visibility" TargetName="tbWaterMark" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="tbWatermark" Value="Visible"/>
                                 </Trigger>
                                 <Trigger  Property="IsEnabled" Value="False">
                                     <Setter Property="Opacity" Value="0.4"></Setter>
@@ -651,7 +592,7 @@
                                                     </MultiBinding>
                                                 </ScrollViewer.Height>
                                             </ScrollViewer>
-                                            <TextBlock  x:Name="tbWaterMark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding WaterMark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
+                                            <TextBlock  x:Name="tbWatermark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding Watermark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -674,7 +615,7 @@
                                     </Trigger.ExitActions>
                                 </Trigger>
                                 <Trigger Property="Text" Value="">
-                                    <Setter Property="Visibility" TargetName="tbWaterMark" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="tbWatermark" Value="Visible"/>
                                 </Trigger>
                                 <Trigger  Property="IsEnabled" Value="False">
                                     <Setter Property="Opacity" Value="0.4"></Setter>
@@ -728,7 +669,7 @@
                                                 </MultiBinding>
                                             </ScrollViewer.Height>
                                         </ScrollViewer>
-                                        <TextBlock  x:Name="tbWaterMark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding WaterMark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
+                                        <TextBlock  x:Name="tbWatermark" Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding Watermark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -750,7 +691,7 @@
                                     </Trigger.ExitActions>
                                 </Trigger>
                                 <Trigger Property="Text" Value="">
-                                    <Setter Property="Visibility" TargetName="tbWaterMark" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="tbWatermark" Value="Visible"/>
                                 </Trigger>
                                 <Trigger  Property="IsEnabled" Value="False">
                                     <Setter Property="Opacity" Value="0.4"></Setter>
@@ -791,7 +732,7 @@
                                                     </MultiBinding>
                                                 </ScrollViewer.Height>
                                             </ScrollViewer>
-                                            <TextBlock  x:Name="tbWaterMark"  Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding WaterMark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
+                                            <TextBlock  x:Name="tbWatermark"  Margin="3,0,0,0" Padding="{TemplateBinding Padding}" TextWrapping="Wrap" Focusable="False" IsHitTestVisible="False" Visibility="Collapsed" Text="{Binding Watermark,RelativeSource={RelativeSource AncestorType=TextBox}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Opacity="0.6"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -814,7 +755,7 @@
                                     </Trigger.ExitActions>
                                 </Trigger>
                                 <Trigger Property="Text" Value="">
-                                    <Setter Property="Visibility" TargetName="tbWaterMark" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="tbWatermark" Value="Visible"/>
                                 </Trigger>
                                 <Trigger  Property="IsEnabled" Value="False">
                                     <Setter Property="Opacity" Value="0.4"></Setter>
@@ -919,14 +860,14 @@
                         <ControlTemplate TargetType="{x:Type local:PUCheckBox}">
                             <StackPanel Orientation="Horizontal">
                                 <Grid Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox}}" Width="{Binding InnerWidth,RelativeSource={RelativeSource AncestorType=CheckBox}}">
-                                    <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource CornerRadiusConverter}}">
-                                        <Border x:Name="bdrInner" BorderThickness="0" Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource CornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
+                                    <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleCornerRadiusConverter}}">
+                                        <Border x:Name="bdrInner" BorderThickness="0" Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleCornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
                                             <Border.RenderTransform>
                                                 <ScaleTransform x:Name="scale" ScaleX="1" ScaleY="1"></ScaleTransform>
                                             </Border.RenderTransform>
                                         </Border>
                                     </Border>
-                                    <Border HorizontalAlignment="Right" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource CornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleHeightConverter}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleHeightConverter}}" Background="White">
+                                    <Border HorizontalAlignment="Right" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleCornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleHeightConverter}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=CheckBox},Converter={StaticResource ToggleHeightConverter}}" Background="White">
                                         <Border.Effect>
                                             <DropShadowEffect x:Name="effect" Color="DimGray" Opacity="0.4" BlurRadius="3" ShadowDepth="0.5" Direction="215"></DropShadowEffect>
                                         </Border.Effect>
@@ -1111,17 +1052,20 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type local:PURadioButton}">
                             <StackPanel Orientation="Horizontal">
-                                <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton}}" Background="{TemplateBinding Background}">
-                                    <Border x:Name="bdrInner" Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
-                                        <Border.RenderTransform>
-                                            <ScaleTransform x:Name="scale1" ScaleX="1" ScaleY="1"></ScaleTransform>
-                                        </Border.RenderTransform>
-                                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
+                                <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleCornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton}}" Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <Border x:Name="bdrInner"  Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleCornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
+
+                                            <Border.RenderTransform>
+                                                <ScaleTransform x:Name="scale1" ScaleX="1" ScaleY="1"></ScaleTransform>
+                                            </Border.RenderTransform>
+                                        </Border>
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=RadioButton}}" RenderTransformOrigin="0.5,0.5">
                                             <Border.RenderTransform>
                                                 <ScaleTransform x:Name="scale2" ScaleX="0" ScaleY="0"></ScaleTransform>
                                             </Border.RenderTransform>
                                         </Border>
-                                    </Border>
+                                    </Grid>
                                 </Border>
                                 <ContentPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ContentSource="Content"></ContentPresenter>
                             </StackPanel>
@@ -1140,12 +1084,12 @@
                                                         <BackEase EasingMode="EaseOut"></BackEase>
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
-                                                <DoubleAnimation To="0.45" Duration="0:0:0.4" Storyboard.TargetName="scale2" Storyboard.TargetProperty="ScaleX">
+                                                <DoubleAnimation To="0.35" Duration="0:0:0.5" Storyboard.TargetName="scale2" Storyboard.TargetProperty="ScaleX">
                                                     <DoubleAnimation.EasingFunction>
                                                         <BackEase EasingMode="EaseOut"></BackEase>
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
-                                                <DoubleAnimation To="0.45" Duration="0:0:0.4" Storyboard.TargetName="scale2" Storyboard.TargetProperty="ScaleY">
+                                                <DoubleAnimation To="0.35" Duration="0:0:0.5" Storyboard.TargetName="scale2" Storyboard.TargetProperty="ScaleY">
                                                     <DoubleAnimation.EasingFunction>
                                                         <BackEase EasingMode="EaseOut"></BackEase>
                                                     </DoubleAnimation.EasingFunction>
@@ -1203,14 +1147,14 @@
                         <ControlTemplate TargetType="{x:Type local:PURadioButton}">
                             <StackPanel Orientation="Horizontal">
                                 <Grid Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton}}" Width="{Binding InnerWidth,RelativeSource={RelativeSource AncestorType=RadioButton}}">
-                                    <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}">
-                                        <Border x:Name="bdrInner" BorderThickness="0" Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
+                                    <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleCornerRadiusConverter}}">
+                                        <Border x:Name="bdrInner" BorderThickness="0" Background="White" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleCornerRadiusConverter}}" RenderTransformOrigin="0.5,0.5">
                                             <Border.RenderTransform>
                                                 <ScaleTransform x:Name="scale" ScaleX="1" ScaleY="1"></ScaleTransform>
                                             </Border.RenderTransform>
                                         </Border>
                                     </Border>
-                                    <Border HorizontalAlignment="Right" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource CornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleHeightConverter}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleHeightConverter}}" Background="White">
+                                    <Border HorizontalAlignment="Right" CornerRadius="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleCornerRadiusConverter}}" Height="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleHeightConverter}}" Width="{Binding InnerHeight,RelativeSource={RelativeSource AncestorType=RadioButton},Converter={StaticResource ToggleHeightConverter}}" Background="White">
                                         <Border.Effect>
                                             <DropShadowEffect x:Name="effect" Color="DimGray" Opacity="0.4" BlurRadius="3" ShadowDepth="0.5" Direction="215"></DropShadowEffect>
                                         </Border.Effect>
@@ -1493,6 +1437,51 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type local:PUProgressBar}">
+        <Setter Property="BorderBrush" Value="DimGray"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="CoverBrush" Value="{StaticResource Theme}"></Setter>
+        <Setter Property="Foreground" Value="#FFAAAAAA"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsVertical" Value="False">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:PUProgressBar}">
+                            <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Background="{TemplateBinding Background}">
+                                <Grid Margin="-0.5,0,0,0">
+                                    <Border x:Name="bdrInner" VerticalAlignment="Center"  HorizontalAlignment="Left" Width="{Binding InnerWidth,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Height="{TemplateBinding Height}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=ProgressBar},Converter={StaticResource SideCornerRadiusConverter}}" Background="{Binding CoverBrush,RelativeSource={RelativeSource AncestorType=ProgressBar}}"/>
+                                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" Content="{Binding Percent,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Visibility="{Binding ShowPercent,RelativeSource={RelativeSource AncestorType=ProgressBar}}"></Label>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsVertical" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:PUProgressBar}">
+                            <Border x:Name="bdrOuter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Background="{TemplateBinding Background}" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <RotateTransform Angle="-90"></RotateTransform>
+                                </Border.RenderTransform>
+                                <Grid Margin="-1,0,0,0">
+                                    <Border x:Name="bdrInner" VerticalAlignment="Center"  HorizontalAlignment="Left" Width="{Binding InnerWidth,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Height="{TemplateBinding Height}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding BorderCornerRadius,RelativeSource={RelativeSource AncestorType=ProgressBar},Converter={StaticResource SideCornerRadiusConverter}}" Background="{Binding CoverBrush,RelativeSource={RelativeSource AncestorType=ProgressBar}}"/>
+                                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" Content="{Binding Percent,RelativeSource={RelativeSource AncestorType=ProgressBar}}" Visibility="{Binding ShowPercent,RelativeSource={RelativeSource AncestorType=ProgressBar}}" RenderTransformOrigin="0.5,0.5">
+                                        <Label.RenderTransform>
+                                            <RotateTransform Angle="90"></RotateTransform>
+                                        </Label.RenderTransform>
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="ScrollBarThumb"  TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"  Value="true"/>

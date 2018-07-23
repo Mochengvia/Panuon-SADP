@@ -27,21 +27,21 @@ namespace Panuon.UI
         /// </summary>
         public CornerRadius BorderCornerRadius
         {
-            get { return (CornerRadius) GetValue(BorderCornerRadiusProperty); }
+            get { return (CornerRadius)GetValue(BorderCornerRadiusProperty); }
             set { SetValue(BorderCornerRadiusProperty, value); }
         }
         public static readonly DependencyProperty BorderCornerRadiusProperty = DependencyProperty.Register("BorderCornerRadius", typeof(CornerRadius), typeof(PUButton), new PropertyMetadata(new CornerRadius(0)));
 
         /// <summary>
-        /// 鼠标悬浮时遮罩层的背景颜色（或前景色），默认值为白色。
+        /// 鼠标悬浮时遮罩层的背景颜色，默认值为白色。
         /// <para>仅当按钮样式为General时生效。</para>
         /// </summary>
-        public SolidColorBrush CoverBrush
+        public Brush CoverBrush
         {
-            get { return (SolidColorBrush)GetValue(CoverBrushProperty); }
+            get { return (Brush)GetValue(CoverBrushProperty); }
             set { SetValue(CoverBrushProperty, value); }
         }
-        public static readonly DependencyProperty CoverBrushProperty = DependencyProperty.Register("CoverBrush", typeof(SolidColorBrush), typeof(PUButton), new PropertyMetadata(new SolidColorBrush(Colors.White)));
+        public static readonly DependencyProperty CoverBrushProperty = DependencyProperty.Register("CoverBrush", typeof(Brush), typeof(PUButton), new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
         #endregion
 

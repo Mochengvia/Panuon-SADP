@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panuon SADP net40", "Panuon SADP net40\Panuon SADP net40.csproj", "{C7AEFE3D-B3A5-4C4F-AD5F-6425DF12926E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panuon.UI", "C:\Users\97042\Documents\Visual Studio 2015\Projects\Panuon SecurityBox\Panuon.UI\Panuon.UI.csproj", "{72B3698E-1784-4101-99AE-FC7B8F48E96D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panuon.UI", "Panuon.UI\Panuon.UI.csproj", "{72B3698E-1784-4101-99AE-FC7B8F48E96D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
