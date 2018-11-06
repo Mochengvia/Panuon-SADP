@@ -39,6 +39,9 @@
     <Reference Include="Caliburn.Micro.Platform, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net40\Caliburn.Micro.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Panuon.UI">
+      <HintPath>..\Reference\Panuon.UI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -113,12 +116,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Panuon.UI\Panuon.UI.csproj">
-      <Project>{72b3698e-1784-4101-99ae-fc7b8f48e96d}</Project>
-      <Name>Panuon.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
